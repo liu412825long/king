@@ -2,7 +2,7 @@ package cn.bj.king.service.impl;
 
 import cn.bj.king.dto.AccountDTO;
 import cn.bj.king.entity.AccountDO;
-import cn.bj.king.mapper.AccountDOMapper;
+import cn.bj.king.mapper.master.AccountDOMapper;
 import cn.bj.king.service.AccountService;
 import cn.bj.king.util.TypeConverter;
 import cn.bj.king.vo.AccountVO;

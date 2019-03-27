@@ -1,4 +1,4 @@
-package cn.bj.king.mapper;
+package cn.bj.king.mapper.slave;
 
 import cn.bj.king.entity.AccountDO;
 
