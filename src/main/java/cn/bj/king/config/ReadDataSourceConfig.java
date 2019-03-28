@@ -1,4 +1,4 @@
-package cn.bj.king.base;
+package cn.bj.king.config;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
@@ -48,9 +48,9 @@ public class ReadDataSourceConfig {
         SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
         sqlSessionFactoryBean.setDataSource(dataSource);
         PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
-//        sqlSessionFactoryBean.setTypeAliasesPackage("cn.bj.king.entity");
         // 配置mapper文件位置
         sqlSessionFactoryBean.setMapperLocations(resolver.getResources("classpath:mapper/slave/*.xml"));
+        sqlSessionFactoryBean.setTypeAliasesPackage("cn.bj.king.entity");
         return sqlSessionFactoryBean.getObject();
     }
 

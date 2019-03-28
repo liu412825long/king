@@ -30,14 +30,6 @@ spring:
         pool-name: sg-slave
         auto-commit: false
         connection-test-query: SELECT 1
-  main:
-    allow-bean-definition-overriding: true
-
-#mybatis:
-#  #指定xml所在的位置
-#  mapper-locations: classpath:mapper/*Mapper.xml
-#  #指定entity所在的位置
-#  type-aliases-package: cn.bj.king.entity
 
 
 logging.file: /logs/${spring.application.name}.log

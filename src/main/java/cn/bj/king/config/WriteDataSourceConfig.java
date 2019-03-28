@@ -1,4 +1,4 @@
-package cn.bj.king.base;
+package cn.bj.king.config;
 
 import com.zaxxer.hikari.HikariDataSource;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -16,6 +16,10 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.sql.DataSource;
 
+/**
+ * @author ARongking
+ * @date 2019-03-28
+ */
 @Configuration
 @EnableTransactionManagement
 @MapperScan(basePackages = {"cn.bj.king.mapper.master"},
@@ -46,6 +50,7 @@ public class WriteDataSourceConfig {
         PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
         // 配置mapper文件位置
         sqlSessionFactoryBean.setMapperLocations(resolver.getResources("classpath:mapper/master/*.xml"));
+        sqlSessionFactoryBean.setTypeAliasesPackage("cn.bj.king.entity");
         return sqlSessionFactoryBean.getObject();
     }
 
