@@ -5,15 +5,33 @@ spring:
     name: king
   datasource:
     master:
+      type: com.zaxxer.hikari.HikariDataSource
+      jdbc-url: jdbc:mysql://localhost:3306/shengong?useUnicode=yes&characterEncoding=UTF-8&serverTimezone=UTC
       driver-class-name: com.mysql.cj.jdbc.Driver
-      url: jdbc:mysql://localhost:3306/king?useUnicode=true&characterEncoding=utf-8&serverTimezone=GMT%2B8
       username: root
-      password: arongking
+      password: 123456
+      hikari:
+        idle-timeout: 10000
+        minimum-idle: 1
+        maximum-pool-size: 10
+        pool-name: sg-master
+        auto-commit: false
+        connection-test-query: SELECT 1
     slave:
+      type: com.zaxxer.hikari.HikariDataSource
+      jdbc-url: jdbc:mysql://localhost:3306/king?useUnicode=yes&characterEncoding=UTF-8&serverTimezone=UTC
       driver-class-name: com.mysql.cj.jdbc.Driver
-      url: jdbc:mysql://localhost:3306/king?useUnicode=true&characterEncoding=utf-8&serverTimezone=GMT%2B8
       username: root
-      password: arongking
+      password: 123456
+      hikari:
+        idle-timeout: 10000
+        minimum-idle: 1
+        maximum-pool-size: 10
+        pool-name: sg-slave
+        auto-commit: false
+        connection-test-query: SELECT 1
+  main:
+    allow-bean-definition-overriding: true
 
 #mybatis:
 #  #指定xml所在的位置
