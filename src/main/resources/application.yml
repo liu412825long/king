@@ -30,6 +30,19 @@ spring:
         pool-name: sg-slave
         auto-commit: false
         connection-test-query: SELECT 1
+  redis:
+    host: 127.0.0.1
+    password:
+    port: 6379
+    timeout: 0
+    database: 0
+    jedis:
+      pool:
+        max-active: 8
+        max-wait: -1
+        max-idle: 8
+        min-idle: 0
+
 
 
 logging.file: /logs/${spring.application.name}.log
