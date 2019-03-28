@@ -11,6 +11,7 @@ import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.cache.interceptor.KeyGenerator;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Scope;
 import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
 import org.springframework.data.redis.connection.jedis.JedisClientConfiguration;
 import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
@@ -76,7 +77,8 @@ public class RedisConfig extends CachingConfigurerSupport {
      * @return
      */
     @Bean
-    public RedisTemplate redisTemplate(){
+    public RedisTemplate redisTemplate(JedisPoolConfig jedisPoolConfig){
+        System.out.println("实例化redisTemplate");
         //StringRedisTemplate的构造方法中默认设置了stringSerializer
         RedisTemplate<String, Object> template = new RedisTemplate<>();
         //set key serializer
@@ -89,7 +91,7 @@ public class RedisConfig extends CachingConfigurerSupport {
         objectMapper.enableDefaultTyping(ObjectMapper.DefaultTyping.NON_FINAL);
         jackson2JsonRedisSerializer.setObjectMapper(objectMapper);
         template.setDefaultSerializer(jackson2JsonRedisSerializer);
-        template.setConnectionFactory(jedisConnectionFactory(jedisPoolConfig()));
+        template.setConnectionFactory(jedisConnectionFactory(jedisPoolConfig));
         template.afterPropertiesSet();
         return template;
     }
