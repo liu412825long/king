@@ -36,6 +36,8 @@ public class RedisConfig extends CachingConfigurerSupport {
     private int database;
     @Value("${spring.redis.timeout}")
     private int timeout;
+    @Value("${spring.redis.max-total}")
+    private int maxTotal;
     @Value("${spring.redis.jedis.pool.max-active}")
     private int maxActive;
     @Value("${spring.redis.jedis.pool.max-wait}")
@@ -79,29 +81,34 @@ public class RedisConfig extends CachingConfigurerSupport {
     @Bean
     public RedisTemplate redisTemplate(JedisPoolConfig jedisPoolConfig){
         System.out.println("实例化redisTemplate");
-        //StringRedisTemplate的构造方法中默认设置了stringSerializer
-        RedisTemplate<String, Object> template = new RedisTemplate<>();
-        //set key serializer
+        RedisTemplate<String, Object> redisTemplate = new RedisTemplate<>();
+        //设置序列化器
         StringRedisSerializer stringRedisSerializer = new StringRedisSerializer();
-        template.setKeySerializer(stringRedisSerializer);
-        template.setHashKeySerializer(stringRedisSerializer);
+        redisTemplate.setKeySerializer(stringRedisSerializer);
+        redisTemplate.setHashKeySerializer(stringRedisSerializer);
         Jackson2JsonRedisSerializer jackson2JsonRedisSerializer = new Jackson2JsonRedisSerializer(Object.class);
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.ANY);
         objectMapper.enableDefaultTyping(ObjectMapper.DefaultTyping.NON_FINAL);
         jackson2JsonRedisSerializer.setObjectMapper(objectMapper);
-        template.setDefaultSerializer(jackson2JsonRedisSerializer);
-        template.setConnectionFactory(jedisConnectionFactory(jedisPoolConfig));
-        template.afterPropertiesSet();
-        return template;
+        redisTemplate.setDefaultSerializer(jackson2JsonRedisSerializer);
+        redisTemplate.setConnectionFactory(jedisConnectionFactory(jedisPoolConfig));
+        redisTemplate.afterPropertiesSet();
+        return redisTemplate;
     }
 
+    /**
+     * redis 连接池配置
+     * @return
+     */
     @Bean
     public JedisPoolConfig jedisPoolConfig(){
         JedisPoolConfig jedisPoolConfig=new JedisPoolConfig();
         jedisPoolConfig.setMaxIdle(maxIdle);
         jedisPoolConfig.setMinIdle(minIdle);
-        jedisPoolConfig.setMaxTotal(100);
+        jedisPoolConfig.setMaxTotal(maxTotal);
+        jedisPoolConfig.setMaxWaitMillis(maxWait);
+        jedisPoolConfig.setTestOnBorrow(true);
         return jedisPoolConfig;
 
     }
@@ -124,16 +131,5 @@ public class RedisConfig extends CachingConfigurerSupport {
         jedisPoolingClientConfigurationBuilder.poolConfig(jedisPoolConfig);
         return factory;
     }
-
-//    /**
-//     * 管理缓存
-//     */
-//    @Bean
-//    public CacheManager cacheManager(RedisTemplate redisTemplate) {
-//        RedisCacheManager rcm = new RedisCacheManager(redisTemplate);
-//        return rcm;
-//    }
-
-
 
 }
