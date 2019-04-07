@@ -6,6 +6,7 @@ import cn.bj.king.entity.AccountDO;
 import cn.bj.king.service.AccountService;
 import cn.bj.king.vo.AccountVO;
 import com.github.pagehelper.PageInfo;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -59,6 +60,16 @@ public class AccountController {
      */
     @GetMapping(value = "{id}",produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseMessage<AccountVO> findById(@PathVariable("id")Integer id){
+        return ResponseMessage.build(0,accountService.findById(id));
+
+    }
+    /**
+     * 通过ID参数查询账户信息
+     * @param id
+     * @return
+     */
+    @GetMapping(value = "queryById",produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResponseMessage<AccountVO> queryById(@Param("id") Integer id){
         return ResponseMessage.build(0,accountService.findById(id));
 
     }

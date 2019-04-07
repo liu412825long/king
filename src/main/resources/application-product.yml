@@ -1,4 +1,4 @@
-environment: dev
+environment: product
 server:
   port: 8080
 spring:
@@ -31,26 +31,14 @@ spring:
         pool-name: sg-slave
         auto-commit: false
         connection-test-query: SELECT 1
-  redis:
-    host: 127.0.0.1
-    password:
-    port: 6379
-    timeout: 2000
-    database: 0
-    max-total: 1000
-    jedis:
-      pool:
-        max-active: 8
-        max-wait: 10000
-        max-idle: 8
-        min-idle: 1
-  rabbitmq:
-    host: 127.0.0.1
-    port: 5672
-    username: guest
-    password: guest
+  main:
+    allow-bean-definition-overriding: true
 
-
+#mybatis:
+#  #指定xml所在的位置
+#  mapper-locations: classpath:mapper/*Mapper.xml
+#  #指定entity所在的位置
+#  type-aliases-package: cn.bj.king.entity
 
 
 logging.file: /logs/${spring.application.name}.log
