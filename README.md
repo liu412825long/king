@@ -4,3 +4,4 @@
 * PageHelp集成
 * RestTemplate集成
 * redis集成
+* RabbitMQ集成

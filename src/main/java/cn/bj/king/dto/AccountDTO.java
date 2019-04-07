@@ -1,8 +1,11 @@
 package cn.bj.king.dto;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class AccountDTO {
+public class AccountDTO implements Serializable{
+
+    private static final long serialVersionUID = 334633252583806994L;
     private Integer id;
 
     private String username;
