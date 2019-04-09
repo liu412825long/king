@@ -12,6 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -24,9 +25,13 @@ public class AccountServiceImpl implements AccountService {
     private AccountDOMapper accountDOMapper;
 
     @Override
+    @Transactional(value = "slaveTransactionManager",rollbackFor = Exception.class)
     public int createAccount(AccountDTO accountDTO) {
         logger.info("创建account账户信息。");
-        return accountDOMapper.insertSelective(TypeConverter.convert(accountDTO, AccountDO.class));
+        int result=accountDOMapper.insertSelective(TypeConverter.convert(accountDTO, AccountDO.class));
+        String[] nickName=accountDTO.getNickname().split(",");
+        System.out.println(nickName);
+        return result;
     }
 
     @Override

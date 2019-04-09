@@ -10,7 +10,7 @@ spring:
       jdbc-url: jdbc:mysql://localhost:3306/shengong?useUnicode=yes&characterEncoding=UTF-8&serverTimezone=UTC
       driver-class-name: com.mysql.cj.jdbc.Driver
       username: root
-      password: 123456
+      password: arongking
       hikari:
         idle-timeout: 10000
         minimum-idle: 1
@@ -23,7 +23,7 @@ spring:
       jdbc-url: jdbc:mysql://localhost:3306/king?useUnicode=yes&characterEncoding=UTF-8&serverTimezone=UTC
       driver-class-name: com.mysql.cj.jdbc.Driver
       username: root
-      password: 123456
+      password: arongking
       hikari:
         idle-timeout: 10000
         minimum-idle: 1

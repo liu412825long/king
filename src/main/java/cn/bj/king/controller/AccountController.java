@@ -75,7 +75,8 @@ public class AccountController {
     }
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public PageInfo queryByPage(int pageNum, int pageSize){
+    public PageInfo queryByPage(@RequestParam(value = "pageNum",defaultValue = "0",required = false) int pageNum,
+                                @RequestParam(value = "pageSize",defaultValue = "10",required = false)int pageSize){
         return accountService.findAllAccount(pageNum,pageSize);
     }
 }
