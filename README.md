@@ -7,3 +7,4 @@
 * 加入开发，预生产，生产的配置文件，运行时通过 -Dspring.profiles.active=dev 来指明用到的是哪个配置文件。
 * RabbitMQ集成
 * 配置多数据源事务（多数据源要指定使用的哪个事务,事务回滚的异常）
+* 集成Swagger2：访问地址（http://localhost:8080/swagger-ui.html）

@@ -6,12 +6,15 @@ import cn.bj.king.entity.AccountDO;
 import cn.bj.king.service.AccountService;
 import cn.bj.king.vo.AccountVO;
 import com.github.pagehelper.PageInfo;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiOperation;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
-
+@Api(value = "/account",description = "用户管理接口")
 @RestController
 @RequestMapping(value = "accounts")
 public class AccountController {
@@ -24,6 +27,8 @@ public class AccountController {
      * @param accountDTO
      * @return
      */
+    @ApiOperation(value = "创建账户信息",notes = "添加账户")
+    @ApiImplicitParam(name = "accountDTO", value = "用户详细实体accountDTO", required = true, dataType = "AccountDTO")
     @PostMapping(produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseMessage<Integer> createAccount(@RequestBody AccountDTO accountDTO){
         int result=accountService.createAccount(accountDTO);
