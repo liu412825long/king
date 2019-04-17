@@ -52,6 +52,8 @@ public class AccountServiceImpl implements AccountService {
     public AccountVO findById(Integer id) {
         logger.info("查询id为{}的账户信息",id);
         AccountVO accountVO=TypeConverter.convert(accountDOMapper.selectByPrimaryKey(id),AccountVO.class);
+        String name=null;
+        name.indexOf("d");
         return accountVO;
     }
 
@@ -62,7 +64,9 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public boolean deleteAccount(Integer id) {
+    public Boolean deleteAccount(Integer id) {
+        String name=null;
+        name.indexOf("d");
         return accountDOMapper.deleteById(id)>0;
     }
 }
