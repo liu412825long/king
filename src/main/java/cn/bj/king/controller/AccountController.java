@@ -14,6 +14,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
+
 @Api(value = "/account",description = "用户管理接口")
 @RestController
 @RequestMapping(value = "accounts")
@@ -83,5 +85,20 @@ public class AccountController {
     public PageInfo queryByPage(@RequestParam(value = "pageNum",defaultValue = "0",required = false) int pageNum,
                                 @RequestParam(value = "pageSize",defaultValue = "10",required = false)int pageSize){
         return accountService.findAllAccount(pageNum,pageSize);
+    }
+
+    @PostMapping(value = "queryList",produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResponseMessage<AccountVO> queryList(@RequestBody AccountDTO accountDTO){
+        AccountVO accountVO=accountService.findById(accountDTO.getId());
+        accountVO.setAccountDTO(accountDTO);
+        return ResponseMessage.build(0,accountVO);
+
+    }
+    @PostMapping(value = "queryListMap",produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResponseMessage<AccountVO> queryList(@RequestBody AccountDTO accountDTO, AccountDTO accountDTO1){
+        AccountVO accountVO=accountService.findById(accountDTO.getId());
+        accountVO.setAccountDTO(accountDTO1);
+        return ResponseMessage.build(0,accountVO);
+
     }
 }

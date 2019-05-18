@@ -25,7 +25,7 @@ public class LoggerAspect {
     }
 
     @AfterThrowing("webLog()")
-    public void throwss(JoinPoint jp){
+    public void exception(JoinPoint jp){
         System.out.println("方法异常时执行.....");
     }
 
@@ -35,12 +35,11 @@ public class LoggerAspect {
     }
 
     @Around("webLog()")
-    public Object arround(ProceedingJoinPoint pjp) {
+    public Object around(ProceedingJoinPoint pjp) {
         System.out.println("方法环绕start.....");
         MethodSignature signature = (MethodSignature) pjp.getSignature();
-        Object[] obj=pjp.getArgs();
         Class<?> c=signature.getMethod().getReturnType();
-        if(c.getName().equals("boolean") || c.getName().equals("java.lang.Boolean")){
+        if(boolean.class.getName().equals(c.getName()) || Boolean.class.getName().equals(c.getName())){
             return false;
         }
 
@@ -49,7 +48,6 @@ public class LoggerAspect {
             System.out.println("方法环绕proceed，结果是 :" + o);
             return o;
         } catch (Throwable e) {
-//            e.printStackTrace();
             System.out.println("出现异常。。。");
             return null;
         }

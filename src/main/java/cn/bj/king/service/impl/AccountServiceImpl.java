@@ -29,8 +29,6 @@ public class AccountServiceImpl implements AccountService {
     public int createAccount(AccountDTO accountDTO) {
         logger.info("创建account账户信息。");
         int result=accountDOMapper.insertSelective(TypeConverter.convert(accountDTO, AccountDO.class));
-        String[] nickName=accountDTO.getNickname().split(",");
-        System.out.println(nickName);
         return result;
     }
 
@@ -52,8 +50,6 @@ public class AccountServiceImpl implements AccountService {
     public AccountVO findById(Integer id) {
         logger.info("查询id为{}的账户信息",id);
         AccountVO accountVO=TypeConverter.convert(accountDOMapper.selectByPrimaryKey(id),AccountVO.class);
-        String name=null;
-        name.indexOf("d");
         return accountVO;
     }
 
@@ -65,8 +61,6 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public Boolean deleteAccount(Integer id) {
-        String name=null;
-        name.indexOf("d");
         return accountDOMapper.deleteById(id)>0;
     }
 }

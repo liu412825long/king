@@ -1,5 +1,6 @@
 package cn.bj.king.vo;
 
+import cn.bj.king.dto.AccountDTO;
 import lombok.Data;
 
 import java.util.Date;
@@ -37,5 +38,7 @@ public class AccountVO {
     private Date createTime;
 
     private Date updateTime;
+
+    private AccountDTO accountDTO;
 
 }
