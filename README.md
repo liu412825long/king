@@ -9,3 +9,5 @@
 * 配置多数据源事务（多数据源要指定使用的哪个事务,事务回滚的异常）
 * 集成Swagger2：访问地址（http://localhost:8080/swagger-ui.html）
 * redis工具类
+* Http请求的工具类
+* 生成图片验证码的例子
