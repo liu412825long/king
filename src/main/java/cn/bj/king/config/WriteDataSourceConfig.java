@@ -1,5 +1,6 @@
 package cn.bj.king.config;
 
+import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
@@ -29,11 +30,22 @@ public class WriteDataSourceConfig {
 
     @Bean(name = "masterDataSource")
     @Primary
-    @ConfigurationProperties(prefix = "spring.datasource.master")
     @Qualifier("masterDataSource")
-    public DataSource masterDataSource() {
+    public DataSource masterDataSource(@Qualifier("masterHikariConfig")HikariConfig hikariConfig) {
         System.out.println("实例化主库");
-        return DataSourceBuilder.create().type(HikariDataSource.class).build();
+        HikariDataSource hikariDataSource=new HikariDataSource(hikariConfig);
+        return hikariDataSource;
+    }
+
+    /**
+     * 配置连接池信息
+     * @return
+     */
+    @ConfigurationProperties(prefix = "spring.datasource.master")
+    @Bean("masterHikariConfig")
+    public HikariConfig masterHikariConfig(){
+        HikariConfig hikariConfig=new HikariConfig();
+        return hikariConfig;
     }
 
     /**
