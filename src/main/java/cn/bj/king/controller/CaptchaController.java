@@ -8,7 +8,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
 import java.util.Map;
 
-@RestController(value = "captcha")
+@RestController
+@RequestMapping(value = "captcha")
 public class CaptchaController {
 
     /**

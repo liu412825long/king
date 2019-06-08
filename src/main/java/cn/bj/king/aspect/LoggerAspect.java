@@ -4,11 +4,15 @@ import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.*;
 import org.aspectj.lang.reflect.MethodSignature;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 @Aspect
 @Component
 public class LoggerAspect {
+
+    private static Logger logger= LoggerFactory.getLogger(LoggerAspect.class);
 
     @Pointcut("execution(* cn.bj.king.service.impl.*.*(..))")
     public void webLog(){};
@@ -38,10 +42,10 @@ public class LoggerAspect {
     public Object around(ProceedingJoinPoint pjp) {
         System.out.println("方法环绕start.....");
         MethodSignature signature = (MethodSignature) pjp.getSignature();
-        Class<?> c=signature.getMethod().getReturnType();
-        if(boolean.class.getName().equals(c.getName()) || Boolean.class.getName().equals(c.getName())){
-            return false;
-        }
+//        Class<?> c=signature.getMethod().getReturnType();
+//        if(boolean.class.getName().equals(c.getName()) || Boolean.class.getName().equals(c.getName())){
+//            return false;
+//        }
 
         try {
             Object o =  pjp.proceed();
@@ -49,6 +53,7 @@ public class LoggerAspect {
             return o;
         } catch (Throwable e) {
             System.out.println("出现异常。。。");
+            logger.error(e.getMessage());
             return null;
         }
     }

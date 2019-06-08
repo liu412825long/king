@@ -48,7 +48,11 @@ spring:
     username: guest
     password: guest
   resources:
-    static-locations: classpath:/public/
+    static-locations: classpath:/public/,classpath:/static/
+  thymeleaf:
+    cache: false
+    servlet:
+      content-type: text/html
 
 
 
