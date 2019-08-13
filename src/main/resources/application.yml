@@ -4,6 +4,10 @@ server:
 spring:
   application:
     name: king
+  boot:
+    admin:
+      client:
+        url: http://localhost:8000
   datasource:
     master:
       type: com.zaxxer.hikari.HikariDataSource
@@ -54,7 +58,11 @@ spring:
     servlet:
       content-type: text/html
 
-
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
 
 
 logging.file: /logs/${spring.application.name}.log
