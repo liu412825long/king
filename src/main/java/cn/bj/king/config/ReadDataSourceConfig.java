@@ -1,7 +1,9 @@
 package cn.bj.king.config;
 
+import com.github.pagehelper.PageInterceptor;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
+import org.apache.ibatis.plugin.Interceptor;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.annotation.MapperScan;
@@ -30,11 +32,22 @@ public class ReadDataSourceConfig {
 
 
     @Bean(name = "slaveDataSource")
-    @ConfigurationProperties(prefix = "spring.datasource.slave")
     @Qualifier("slaveDataSource")
-    public DataSource slaveDataSource() {
+    public DataSource slaveDataSource(@Qualifier("slaveHikariConfig")HikariConfig hikariConfig) {
         System.out.println("实例化从库");
-        return DataSourceBuilder.create().type(HikariDataSource.class).build();
+        HikariDataSource hikariDataSource=new HikariDataSource(hikariConfig);
+        return hikariDataSource;
+    }
+
+    /**
+     * 配置连接池信息
+     * @return
+     */
+    @ConfigurationProperties(prefix = "spring.datasource.slave")
+    @Bean("slaveHikariConfig")
+    public HikariConfig slaveHikariConfig(){
+        HikariConfig hikariConfig=new HikariConfig();
+        return hikariConfig;
     }
 
     /**

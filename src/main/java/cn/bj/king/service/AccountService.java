@@ -19,5 +19,5 @@ public interface AccountService {
 
     boolean updateAccount(AccountDTO accountDTO);
 
-    boolean deleteAccount(Integer id);
+    Boolean deleteAccount(Integer id);
 }

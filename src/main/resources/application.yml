@@ -10,27 +10,25 @@ spring:
       jdbc-url: jdbc:mysql://localhost:3306/king?useUnicode=yes&characterEncoding=UTF-8&serverTimezone=UTC
       driver-class-name: com.mysql.cj.jdbc.Driver
       username: root
-      password: 123456
-      hikari:
-        idle-timeout: 10000
-        minimum-idle: 1
-        maximum-pool-size: 10
-        pool-name: sg-master
-        auto-commit: false
-        connection-test-query: SELECT 1
+      password: arongking
+      idle-timeout: 10000
+      minimum-idle: 1
+      maximum-pool-size: 10
+      pool-name: sg-master
+      auto-commit: false
+      connection-test-query: SELECT 1
     slave:
       type: com.zaxxer.hikari.HikariDataSource
       jdbc-url: jdbc:mysql://localhost:3306/king?useUnicode=yes&characterEncoding=UTF-8&serverTimezone=UTC
       driver-class-name: com.mysql.cj.jdbc.Driver
       username: root
-      password: 123456
-      hikari:
-        idle-timeout: 10000
-        minimum-idle: 1
-        maximum-pool-size: 10
-        pool-name: sg-slave
-        auto-commit: false
-        connection-test-query: SELECT 1
+      password: arongking
+      idle-timeout: 10000
+      minimum-idle: 1
+      maximum-pool-size: 10
+      pool-name: sg-slave
+      auto-commit: false
+      connection-test-query: SELECT 1
   redis:
     host: 127.0.0.1
     password:
@@ -44,6 +42,17 @@ spring:
         max-wait: 10000
         max-idle: 8
         min-idle: 1
+  rabbitmq:
+    host: 127.0.0.1
+    port: 5672
+    username: guest
+    password: guest
+  resources:
+    static-locations: classpath:/public/,classpath:/static/
+  thymeleaf:
+    cache: false
+    servlet:
+      content-type: text/html
 
 
 

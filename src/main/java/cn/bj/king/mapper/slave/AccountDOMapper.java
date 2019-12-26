@@ -1,6 +1,7 @@
 package cn.bj.king.mapper.slave;
 
 import cn.bj.king.entity.AccountDO;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 

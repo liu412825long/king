@@ -6,12 +6,17 @@ import cn.bj.king.entity.AccountDO;
 import cn.bj.king.service.AccountService;
 import cn.bj.king.vo.AccountVO;
 import com.github.pagehelper.PageInfo;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiOperation;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
 
+@Api(value = "/account",description = "用户管理接口")
 @RestController
 @RequestMapping(value = "accounts")
 public class AccountController {
@@ -24,6 +29,8 @@ public class AccountController {
      * @param accountDTO
      * @return
      */
+    @ApiOperation(value = "创建账户信息",notes = "添加账户")
+    @ApiImplicitParam(name = "accountDTO", value = "用户详细实体accountDTO", required = true, dataType = "AccountDTO")
     @PostMapping(produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseMessage<Integer> createAccount(@RequestBody AccountDTO accountDTO){
         int result=accountService.createAccount(accountDTO);
@@ -75,7 +82,23 @@ public class AccountController {
     }
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public PageInfo queryByPage(int pageNum, int pageSize){
+    public PageInfo queryByPage(@RequestParam(value = "pageNum",defaultValue = "0",required = false) int pageNum,
+                                @RequestParam(value = "pageSize",defaultValue = "10",required = false)int pageSize){
         return accountService.findAllAccount(pageNum,pageSize);
+    }
+
+    @PostMapping(value = "queryList",produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResponseMessage<AccountVO> queryList(@RequestBody AccountDTO accountDTO){
+        AccountVO accountVO=accountService.findById(accountDTO.getId());
+        accountVO.setAccountDTO(accountDTO);
+        return ResponseMessage.build(0,accountVO);
+
+    }
+    @PostMapping(value = "queryListMap",produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResponseMessage<AccountVO> queryList(@RequestBody AccountDTO accountDTO, AccountDTO accountDTO1){
+        AccountVO accountVO=accountService.findById(accountDTO.getId());
+        accountVO.setAccountDTO(accountDTO1);
+        return ResponseMessage.build(0,accountVO);
+
     }
 }
