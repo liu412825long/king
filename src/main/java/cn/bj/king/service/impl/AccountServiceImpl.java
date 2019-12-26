@@ -4,6 +4,7 @@ import cn.bj.king.dto.AccountDTO;
 import cn.bj.king.entity.AccountDO;
 import cn.bj.king.mapper.slave.AccountDOMapper;
 import cn.bj.king.service.AccountService;
+import cn.bj.king.util.MD5Coder;
 import cn.bj.king.util.TypeConverter;
 import cn.bj.king.vo.AccountVO;
 import com.github.pagehelper.PageHelper;
@@ -26,6 +27,9 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public int createAccount(AccountDTO accountDTO) {
         logger.info("创建account账户信息。");
+        //对密码进行加密
+        String password=accountDTO.getPassword();
+        accountDTO.setPassword(MD5Coder.encode(password));
         return accountDOMapper.insertSelective(TypeConverter.convert(accountDTO, AccountDO.class));
     }
 
