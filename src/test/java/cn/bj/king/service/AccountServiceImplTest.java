@@ -21,25 +21,24 @@ public class AccountServiceImplTest extends KingApplicationTests {
 
     @Test
     public void createAccount() throws Exception {
-        ExecutorService executor= Executors.newFixedThreadPool(5);
+        List<AccountDTO> list= createDTO();
 
-        for(int i=0;i<10;i++){
-
-            executor.execute(new Runnable() {
-                @Override
-                public void run() {
-
-                    List<AccountDTO> list= createDTO();
-
-                    accountService.batchCreateAccount(list);
-
-
-                }
-            });
-
-        }
-        Thread.sleep(60000);
-
+        accountService.batchCreateAccount(list);
+//        ExecutorService executor= Executors.newFixedThreadPool(5);
+//
+//        for(int i=0;i<10;i++){
+//
+//            executor.execute(new Runnable() {
+//                @Override
+//                public void run() {
+//
+//
+//
+//
+//                }
+//            });
+//
+//        }
     }
 
    private List<AccountDTO> createDTO(){

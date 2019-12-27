@@ -4,6 +4,7 @@ import cn.bj.king.dto.AccountDTO;
 import cn.bj.king.entity.AccountDO;
 import cn.bj.king.mapper.slave.AccountDOMapper;
 import cn.bj.king.service.AccountService;
+import cn.bj.king.util.MD5Coder;
 import cn.bj.king.util.TypeConverter;
 import cn.bj.king.vo.AccountVO;
 import com.github.pagehelper.PageHelper;
@@ -12,7 +13,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -25,11 +25,12 @@ public class AccountServiceImpl implements AccountService {
     private AccountDOMapper accountDOMapper;
 
     @Override
-    @Transactional(value = "slaveTransactionManager",rollbackFor = Exception.class)
     public int createAccount(AccountDTO accountDTO) {
         logger.info("创建account账户信息。");
-        int result=accountDOMapper.insertSelective(TypeConverter.convert(accountDTO, AccountDO.class));
-        return result;
+        //对密码进行加密
+        String password=accountDTO.getPassword();
+        accountDTO.setPassword(MD5Coder.encode(password));
+        return accountDOMapper.insertSelective(TypeConverter.convert(accountDTO, AccountDO.class));
     }
 
     @Override
@@ -60,7 +61,7 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public Boolean deleteAccount(Integer id) {
+    public boolean deleteAccount(Integer id) {
         return accountDOMapper.deleteById(id)>0;
     }
 }
