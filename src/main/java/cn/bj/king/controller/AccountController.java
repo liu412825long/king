@@ -101,4 +101,10 @@ public class AccountController {
         return ResponseMessage.build(0,accountVO);
 
     }
+    @PostMapping(value = "login",produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResponseMessage<String> login(@RequestBody AccountDTO accountDTO){
+        String token=accountService.login(accountDTO.getUsername(),accountDTO.getPassword());
+        return ResponseMessage.build(0,token);
+
+    }
 }

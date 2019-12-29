@@ -20,4 +20,6 @@ public interface AccountService {
     boolean updateAccount(AccountDTO accountDTO);
 
     boolean deleteAccount(Integer id);
+
+    String login(String username ,String password);
 }

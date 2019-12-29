@@ -32,7 +32,7 @@ public class ResponseMessage<T> implements Serializable {
      * 待返回的消息内容
      * <p>
      */
-    private String message;
+    private String message="成功";
 
     /**
      * 待返回的头部信息

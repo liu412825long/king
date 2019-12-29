@@ -1,19 +1,26 @@
 package cn.bj.king.service.impl;
 
+import cn.bj.king.base.ResponseMessage;
 import cn.bj.king.dto.AccountDTO;
 import cn.bj.king.entity.AccountDO;
+import cn.bj.king.enums.ErrorCodeEnum;
+import cn.bj.king.exception.TigerException;
 import cn.bj.king.mapper.slave.AccountDOMapper;
 import cn.bj.king.service.AccountService;
+import cn.bj.king.util.JSON;
 import cn.bj.king.util.MD5Coder;
+import cn.bj.king.util.RedisUtil;
 import cn.bj.king.util.TypeConverter;
 import cn.bj.king.vo.AccountVO;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.lang.reflect.Type;
 import java.util.List;
 
 @Service
@@ -23,6 +30,9 @@ public class AccountServiceImpl implements AccountService {
 
     @Autowired
     private AccountDOMapper accountDOMapper;
+
+    @Autowired
+    private RedisUtil redisUtil;
 
     @Override
     public int createAccount(AccountDTO accountDTO) {
@@ -64,4 +74,21 @@ public class AccountServiceImpl implements AccountService {
     public boolean deleteAccount(Integer id) {
         return accountDOMapper.deleteById(id)>0;
     }
+
+    @Override
+    public String login(String username, String password) {
+        if(StringUtils.isEmpty(username) || StringUtils.isEmpty(password)){
+            throw new TigerException(ErrorCodeEnum.ILLEGAL_PARAMETER);
+        }
+        password=MD5Coder.encode(password);
+        AccountDO accountDO=accountDOMapper.selectByUsername(username,password);
+        AccountVO accountVO= TypeConverter.convert(accountDO,AccountVO.class);
+        //生成一个token
+        String accountJson= JSON.stringify(accountVO);
+        String token=MD5Coder.encode(accountJson);
+        redisUtil.set(token,accountJson);
+        return token;
+    }
+
+
 }

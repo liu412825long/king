@@ -14,6 +14,8 @@ public interface AccountDOMapper {
 
     AccountDO selectByPrimaryKey(Integer id);
 
+    AccountDO selectByUsername(@Param("username") String username,@Param("password")String password);
+
     int updateByPrimaryKeySelective(AccountDO record);
 
     int updateByPrimaryKey(AccountDO record);
