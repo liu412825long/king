@@ -16,14 +16,14 @@ import org.apache.commons.lang3.StringUtils;
  * @version $Id: AppException.java, v 0.1 Jun 21, 2015 10:57:19 AM yiliang.gyl
  *          Exp $
  */
-public class TigerException extends RuntimeException {
+public class GlobalException extends RuntimeException {
 
     private static final long serialVersionUID = 4925495525292795163L;
 
     /**
      * 异常结果码
      */
-    private String code;
+    private int code;
     /**
      * 异常结果信息
      */
@@ -38,7 +38,7 @@ public class TigerException extends RuntimeException {
      * @param errorCodeEnum
      * @param message
      */
-    public TigerException(ErrorCodeEnum errorCodeEnum, String message, int statusCode) {
+    public GlobalException(ErrorCodeEnum errorCodeEnum, String message, int statusCode) {
         super(message);
         this.code = errorCodeEnum.getCode();
         this.statusCode = statusCode;
@@ -55,7 +55,7 @@ public class TigerException extends RuntimeException {
      * @param errorCodeEnum
      * @param message
      */
-    public TigerException(ErrorCodeEnum errorCodeEnum, String message) {
+    public GlobalException(ErrorCodeEnum errorCodeEnum, String message) {
         super(message);
         this.code = errorCodeEnum.getCode();
         this.message = message;
@@ -67,7 +67,7 @@ public class TigerException extends RuntimeException {
      * @param errorCode
      * @param message
      */
-    public TigerException(String errorCode, String message) {
+    public GlobalException(int errorCode, String message) {
         super(message);
         this.code = errorCode;
         this.message = message;
@@ -78,7 +78,7 @@ public class TigerException extends RuntimeException {
      *
      * @param errorCode
      */
-    public TigerException(ErrorCodeEnum errorCode) {
+    public GlobalException(ErrorCodeEnum errorCode) {
         super();
         this.code = errorCode.getCode();
         this.message = errorCode.getDefaultMessage();
@@ -89,7 +89,7 @@ public class TigerException extends RuntimeException {
      *
      * @return property value of code
      */
-    public String getCode() {
+    public int getCode() {
         return code;
     }
 
@@ -98,7 +98,7 @@ public class TigerException extends RuntimeException {
      *
      * @param code value to be assigned to property code
      */
-    public void setCode(String code) {
+    public void setCode(int code) {
         this.code = code;
     }
 

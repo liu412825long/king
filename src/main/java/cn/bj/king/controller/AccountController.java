@@ -31,7 +31,7 @@ public class AccountController {
      */
     @ApiOperation(value = "创建账户信息",notes = "添加账户")
     @ApiImplicitParam(name = "accountDTO", value = "用户详细实体accountDTO", required = true, dataType = "AccountDTO")
-    @PostMapping(produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @PostMapping(value = "register",produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseMessage<Integer> createAccount(@RequestBody AccountDTO accountDTO){
         int result=accountService.createAccount(accountDTO);
         return ResponseMessage.build(0,result);
@@ -67,7 +67,7 @@ public class AccountController {
      */
     @GetMapping(value = "{id}",produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseMessage<AccountVO> findById(@PathVariable("id")Integer id){
-        return ResponseMessage.build(0,accountService.findById(id));
+        return ResponseMessage.build().data(accountService.findById(id));
 
     }
     /**

@@ -40,13 +40,4 @@ public class CaptchaUtil {
         }
         return result;
     }
-    /**
-     * 创建一个token字符串
-     *
-     * @return
-     */
-    public static String createToken() {
-        return UUID.randomUUID().toString().replace("-", "");
-    }
-
 }

@@ -32,7 +32,7 @@ public class ResponseMessage<T> implements Serializable {
      * 待返回的消息内容
      * <p>
      */
-    private String message="成功";
+    private String message="success";
 
     /**
      * 待返回的头部信息
@@ -48,7 +48,7 @@ public class ResponseMessage<T> implements Serializable {
     /**
      * 默认返回code码, 0 = OK
      */
-    private static final int DEFAULT_CODE = 0;
+    private static final int DEFAULT_CODE = 200;
 
     private static final String HEADER_TOKEN_FIELD = "X-Security-Token";
 

@@ -2,6 +2,7 @@ package cn.bj.king.controller;
 
 import cn.bj.king.base.ResponseMessage;
 import cn.bj.king.util.CaptchaUtil;
+import cn.bj.king.util.TokenUtil;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
@@ -21,7 +22,7 @@ public class CaptchaController {
     @ResponseBody
     public ResponseMessage<?> getCaptcha(HttpServletResponse response) {
         try {
-            String captchaToken = CaptchaUtil.createToken();
+            String captchaToken = TokenUtil.createToken();
             byte[] image = CaptchaUtil.getImageChallengeForID(captchaToken);
             response.addHeader("Captcha-Token", captchaToken);
             Map result = new HashMap();
