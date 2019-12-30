@@ -4,9 +4,12 @@ import cn.bj.king.base.ResponseMessage;
 import cn.bj.king.enums.ErrorCodeEnum;
 import cn.bj.king.exception.GlobalException;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.dao.DuplicateKeyException;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
 
 /**
@@ -29,12 +32,20 @@ public class GlobalExceptionHandler {
         return responseMessage;
     }
 
+    @ExceptionHandler(DuplicateKeyException.class)
+    @ResponseBody
+    @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
+    public ResponseMessage handleDuplicateKeyException(DuplicateKeyException ex) {
+        ResponseMessage responseMessage=new ResponseMessage();
+        responseMessage.setCode(ErrorCodeEnum.DB_EXCEPTION.getCode());
+        responseMessage.setMessage(ErrorCodeEnum.DB_EXCEPTION.getDefaultMessage());
+        return responseMessage;
+    }
+
     @ExceptionHandler(Exception.class)
     @ResponseBody
+    @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
     public ResponseMessage globalException(Exception e){
-        if(log.isDebugEnabled()){
-            e.printStackTrace();
-        }
         ResponseMessage responseMessage=new ResponseMessage();
         responseMessage.setCode(ErrorCodeEnum.SYSTEM_EXCEPTION.getCode());
         responseMessage.setMessage(ErrorCodeEnum.SYSTEM_EXCEPTION.getDefaultMessage());
